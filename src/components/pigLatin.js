@@ -5,11 +5,15 @@ import NavigationComponent from "./navigation/nav-container"
 export default class PigLatin extends Component {
   constructor () {
     super();
+
+    this.state = {
+      input: "",
+      piggy: ""
+    }
   }
 
-  piggyCreater = str => {
-    str = document.getElementById("userStr").value;
-    str = str.toLowerCase()
+  piggyCreater = () => {
+    let str = this.state.input.toLowerCase();
     const vowels = ["a", "e", "i", "o", "u"];
     let vowelIndex = 0;
 
@@ -22,24 +26,43 @@ export default class PigLatin extends Component {
       }
     }
   }
-  return document.getElementById("piggyReturn").innerHTML = str.slice(vowelIndex) + str.slice(0, vowelIndex) + "ay";
+  this.setState({ 
+    piggy: str.slice(vowelIndex) + str.slice(0, vowelIndex) + "ay"
+  })
+  }
+
+  handleChange = event => {
+    this.setState({
+      input: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.setState({
+      input: ""
+    })
+    this.piggyCreater()
   }
 
   render() {
+    console.log(this.state.piggy)
     return (
       <div className="content-wrapper">
         <NavigationComponent />
         <div>
           <h1>Input String to Piggify</h1>
-          <form>
-          <input type="text" id="userStr" />
-            <input type="button" value="Submit" onClick={this.piggyCreater} />
+          <form onSubmit={this.handleSubmit}>
+          <input 
+            type="text"  
+            value={this.state.input}
+            onChange={this.handleChange}
+            />
+            <button type="submit">Piggify Me</button>
           </form>
-            <h1 id="piggyReturn"></h1>
+          {this.state.piggy}
         </div>
       </div>
     )
   }
-
 }
-

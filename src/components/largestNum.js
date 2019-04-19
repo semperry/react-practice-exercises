@@ -7,12 +7,13 @@ export default class LargestNum extends Component {
     super();
 
     this.state = {
+      input: "",
       largest: ""
     }
   }
 
-  largestNumber = arr => {
-    arr = document.getElementById("userArray").value
+  largestNumber = () => {
+    let arr = this.state.input
     let newArr = arr.split(',')
 
     let placeHolder = 0
@@ -21,7 +22,23 @@ export default class LargestNum extends Component {
       newArr[i] > placeHolder ? placeHolder = newArr[i] : null
     }
   
-    return document.getElementById("largestReturn").innerHTML = `The largest number is ${placeHolder}`
+    this.setState({
+      largest: `The largest number is ${placeHolder}`
+    }) 
+  }
+
+  handleChange = event => {
+    this.setState({
+      input: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.setState({
+      input: ""
+    })
+    this.largestNumber()
   }
   
 
@@ -30,12 +47,16 @@ export default class LargestNum extends Component {
       <div>
         <NavigationComponent />
         <div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <h1>Enter Numbers Separated by Commas</h1>
-            <input type="text" id="userArray" />
-            <input type="button" value="Submit" onClick={this.largestNumber} />
+            <input 
+              type="text" 
+              value={this.state.input}
+              onChange={this.handleChange} 
+            />
+            <button type="submit">Check</button>
           </form>
-            <h1 id="largestReturn"></h1>
+            <h1>{this.state.largest}</h1>
         </div>
       </div>
     )

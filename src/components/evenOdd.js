@@ -5,15 +5,36 @@ import NavigationComponent from "./navigation/nav-container"
 export default class EvenOdd extends Component {
   constructor () {
     super();
+
+    this.state = {
+      input: "",
+      number: ""
+    }
   }
 
-  evenOrOdd = num => {
-    num = document.getElementById("userNumber").value;
+  evenOrOdd = () => {
+    let num = this.state.input;
     let value;
 
     num % 2 === 0 ? value= "Even" : value = "Odd";
 
-    return document.getElementById("modulusReturn").innerHTML = `${num} is ${value}`
+    this.setState({
+      number: `${num} is ${value}`
+    }) 
+  }
+
+  handleChange = event => {
+    this.setState({
+      input: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.setState({
+      input: ""
+    })
+    this.evenOrOdd()
   }
 
   render() {
@@ -21,17 +42,18 @@ export default class EvenOdd extends Component {
       <div className="content-wrapper">
         <NavigationComponent />
         <div>
-          <h1>Input Number</h1>
-          <form>
-          <input type="text" id="userNumber" />
-            <input type="button" value="Submit" onClick={this.evenOrOdd} />
+          <h1>Enter Number to Check</h1>
+          <form onSubmit={this.handleSubmit}>
+          <input 
+            type="text"  
+            value={this.state.input}
+            onChange={this.handleChange}
+            />
+            <button type="submit">GO!</button>
           </form>
-            <h1 id="modulusReturn"></h1>
+          {this.state.number}
         </div>
       </div>
-      
     )
   }
-
 }
-

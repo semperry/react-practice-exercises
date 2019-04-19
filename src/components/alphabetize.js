@@ -5,13 +5,31 @@ import NavigationComponent from "./navigation/nav-container"
 export default class Alphabetizer extends Component {
   constructor () {
     super();
+
+    this.state = {
+      alphaStr: "",
+      newStr: ""
+    }
   }
 
-  strAlphebetizer = str => {
-    str = document.getElementById("userString").value;
-    let strArr = Array.from(str.toLowerCase().replace(' ', '')).sort().join('')
+  strAlphebetizer = () => {
+    this.setState({
+      newStr: Array.from(this.state.alphaStr.toLowerCase().replace(' ', '')).sort().join('')
+    })
+  }
 
-    return document.getElementById("alphaReturn").innerHTML = strArr
+  handleChange = event => {
+    this.setState({
+      alphaStr: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.setState({
+      alphaStr: ""
+    })
+    this.strAlphebetizer()
   }
 
   render() {
@@ -20,11 +38,16 @@ export default class Alphabetizer extends Component {
         <NavigationComponent />
         <div>
           <h1>Enter a String to Alphabetize</h1>
-          <form>
-          <input type="text" id="userString" />
-            <input type="button" value="Submit" onClick={this.strAlphebetizer} />
+          <form onSubmit={this.handleSubmit}>
+            <input 
+              type="text"
+              placeholder="Word goes here" 
+              value={this.state.alphaStr}
+              onChange={this.handleChange}
+            />
+            <button type="submit">Alphabetize!</button>
           </form>
-            <h1 id="alphaReturn"></h1>
+            {this.state.newStr}
         </div>
       </div>
       

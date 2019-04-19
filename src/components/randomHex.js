@@ -9,7 +9,6 @@ export default class RandomHex extends Component {
     this.state = {
       hex: ""
     }
-
   }
 
   rndHex = () => {

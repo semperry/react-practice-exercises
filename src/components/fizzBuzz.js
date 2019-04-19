@@ -8,13 +8,11 @@ export default class FizzBuzz extends Component {
 
     this.state = {
       counter: 1,
-      fizzText: ''
+      fizzText: ""
     }
   }
 
-  fizzBuzz = num => {
-    // let arr = Array.from(Array(20).keys())
-    
+  fizzBuzz = num => {    
       if(num % 3 === 0 && num % 5 === 0){
         this.setState({fizzText: 'FizzBuzz'})
       } else if( num % 3 ===  0) {
@@ -23,18 +21,22 @@ export default class FizzBuzz extends Component {
           this.setState({fizzText: 'Buzz'})
         } else { this.setState({fizzText: ''})
           }
-      }
+    }
 
   incrementer = () => {
     if (this.state.counter < 100) {
-      this.setState({counter: ++this.state.counter})
+      this.setState({
+        counter: ++this.state.counter
+      })
       this.fizzBuzz(this.state.counter)
     }
   }
   
   decrementer = () => {
     if (this.state.counter > 1) {
-      this.setState({counter: --this.state.counter})
+      this.setState({
+        counter: --this.state.counter
+      })
       this.fizzBuzz(this.state.counter)
     }
   }
@@ -44,13 +46,11 @@ export default class FizzBuzz extends Component {
       <div className="content-wrapper">
         <NavigationComponent />
         <div>
-          <h1 id="fizzReturn">{this.state.fizzText || this.state.counter}</h1>
-          <button onClick={this.decrementer}>Last Number</button>
-          <button onClick={this.incrementer}>Next Number</button>
+          <h1>{this.state.fizzText || this.state.counter}</h1>
+          <button onClick={this.decrementer}>Last</button>
+          <button onClick={this.incrementer}>Next</button>
         </div>
       </div>
-      
     )
   }
 }
-
